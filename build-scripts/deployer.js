@@ -1,6 +1,7 @@
-import { Client } from 'ssh2';
 import { readFile } from 'fs/promises';
-import { packageSite, SITE_OUTPUT_FILE } from './packager.js';
+import { Client } from 'ssh2';
+import { SITE_OUTPUT_FILE } from '../build-config.js';
+import { packageSite } from './packager.js';
 
 /**
  * Send the site package and return a promise that resolves on success or gets rejected on error.

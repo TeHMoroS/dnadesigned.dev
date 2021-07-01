@@ -1,16 +1,7 @@
 import Metalsmith from 'metalsmith';
 import { optimize } from 'svgo';
+import { IMAGES_BUILD_OUTPUT_DIRECTORY, IMAGES_BUILD_STEP_NAME } from '../../build-config.js';
 import { executeBuild } from './common.js';
-
-/**
- * Build step name.
- */
-const STEP_NAME = 'Images';
-
-/**
- * The name of the main style file.
- */
-const OUTPUT_DIRECTORY = 'images';
 
 /**
  * Add a plugin for Metalsmith that will run SVG minification when running a production build.
@@ -54,10 +45,10 @@ export function buildImages(context) {
   // eslint-disable-next-line new-cap
   const instance = Metalsmith(context.projectDir)
     .source(context.imagesDir)
-    .destination(`${context.outputDir}/${OUTPUT_DIRECTORY}`)
+    .destination(`${context.outputDir}/${IMAGES_BUILD_OUTPUT_DIRECTORY}`)
     .clean(false);
 
   minifySvgIfForProduction(context, instance);
 
-  return executeBuild(instance, STEP_NAME);
+  return executeBuild(instance, IMAGES_BUILD_STEP_NAME);
 }

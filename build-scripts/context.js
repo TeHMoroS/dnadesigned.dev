@@ -1,32 +1,14 @@
+import dotenv from 'dotenv';
 import { dirname, join, normalize } from 'path';
 import { fileURLToPath } from 'url';
+import {
+  ENV_NAME_DEPLOY_DIRECTORY,
+  ENV_NAME_DEPLOY_HOST,
+  ENV_NAME_DEPLOY_PORT,
+  ENV_NAME_DEPLOY_USER_KEY,
+  ENV_NAME_DEPLOY_USER_NAME,
+} from '../build-config.js';
 import { createPrivateProperty } from './utils.js';
-import dotenv from 'dotenv';
-
-/**
- * Deployment host environment variable name.
- */
-const ENV_NAME_DEPLOY_HOST = 'DEPLOY_HOST';
-
-/**
- * Deployment host's port environment variable name.
- */
-const ENV_NAME_DEPLOY_PORT = 'DEPLOY_PORT';
-
-/**
- * Deployment host user's name environment variable name.
- */
-const ENV_NAME_DEPLOY_USER_NAME = 'DEPLOY_USER';
-
-/**
- * Deployment host user's key path environment variable name.
- */
-const ENV_NAME_DEPLOY_USER_KEY = 'DEPLOY_KEY';
-
-/**
- * Deployment host's target directory environment variable name.
- */
-const ENV_NAME_DEPLOY_DIRECTORY = 'DEPLOY_DIR';
 
 /**
  * Build modes.

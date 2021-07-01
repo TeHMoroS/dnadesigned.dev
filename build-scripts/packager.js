@@ -1,10 +1,6 @@
 import tar from 'tar';
+import { SITE_OUTPUT_FILE } from '../build-config.js';
 import { buildAll } from './builder.js';
-
-/**
- * Output package file name.
- */
-export const SITE_OUTPUT_FILE = 'site.tar.gz';
 
 /**
  * Execute the building pipeline and package the results.

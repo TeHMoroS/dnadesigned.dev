@@ -4,27 +4,13 @@ import Metalsmith from 'metalsmith';
 import postcss from 'postcss';
 import postcssImport from 'postcss-import';
 import tailwind from 'tailwindcss';
+import {
+  STYLES_BUILD_MAIN_INPUT_FILE,
+  STYLES_BUILD_OUTPUT_FILE,
+  STYLES_BUILD_OUTPUT_MAP_FILE,
+  STYLES_BUILD_STEP_NAME,
+} from '../../build-config.js';
 import { executeBuild } from './common.js';
-
-/**
- * Build step name.
- */
-const STEP_NAME = 'Styles';
-
-/**
- * The name of the main style file.
- */
-const MAIN_INPUT_FILE = 'index.css';
-
-/**
- * Output styles file name.
- */
-const OUTPUT_FILE = 'styles.css';
-
-/**
- * Output styles source map file name.
- */
-const OUTPUT_MAP_FILE = `${OUTPUT_FILE}.map`;
 
 /**
  * Removes all files from the files object.
@@ -53,11 +39,11 @@ export function buildStyles(context) {
     .destination(context.outputDir)
     .clean(false)
     .use((files, metalsmith, done) => {
-      if (!files[MAIN_INPUT_FILE]) {
+      if (!files[STYLES_BUILD_MAIN_INPUT_FILE]) {
         done(new Error('No main CSS file found'), files, metalsmith);
       }
 
-      const mainStyle = files[MAIN_INPUT_FILE];
+      const mainStyle = files[STYLES_BUILD_MAIN_INPUT_FILE];
       removeAllFiles(files);
 
       const plugins = [postcssImport, tailwind, autoprefixer];
@@ -67,17 +53,17 @@ export function buildStyles(context) {
 
       postcss(plugins)
         .process(mainStyle.contents, {
-          from: `${context.stylesDir}/${MAIN_INPUT_FILE}`,
-          to: `${context.outputDir}/${OUTPUT_FILE}`,
+          from: `${context.stylesDir}/${STYLES_BUILD_MAIN_INPUT_FILE}`,
+          to: `${context.outputDir}/${STYLES_BUILD_OUTPUT_FILE}`,
           map: { inline: false },
         })
         .then((result) => {
-          files[OUTPUT_FILE] = {
+          files[STYLES_BUILD_OUTPUT_FILE] = {
             contents: Buffer.from(result.css),
           };
 
           if (result.map) {
-            files[OUTPUT_MAP_FILE] = {
+            files[STYLES_BUILD_OUTPUT_MAP_FILE] = {
               contents: Buffer.from(result.map.toString()),
             };
           }
@@ -89,5 +75,5 @@ export function buildStyles(context) {
         });
     });
 
-  return executeBuild(instance, STEP_NAME);
+  return executeBuild(instance, STYLES_BUILD_STEP_NAME);
 }

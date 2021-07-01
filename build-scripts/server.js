@@ -3,44 +3,8 @@ import http from 'http';
 import livereload from 'livereload';
 import path from 'path';
 import url from 'url';
-import { buildContent, buildFonts, buildImages, buildStyles } from './builder.js';
+import { SERVER_MIME_TYPES, SERVER_WATCHER_BUILDERS } from '../build-config.js';
 import { WatchBuilder } from './watch-builder.js';
-
-/**
- * WatcherBuilder parameters structure.
- */
-const WATCHER_BUILDERS_PARAMS = [
-  {
-    params: ['layouts', 'content'],
-    build: buildContent,
-  },
-  {
-    params: ['styles', 'layouts', 'content'],
-    build: buildStyles,
-  },
-  {
-    params: ['fonts'],
-    build: buildFonts,
-  },
-  {
-    params: ['images'],
-    build: buildImages,
-  },
-];
-
-/**
- * Supported MIME types.
- */
-const MIME_TYPES = {
-  '.html': 'text/html',
-  '.js': 'text/javascript',
-  '.json': 'application/json',
-  '.css': 'text/css',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.svg': 'image/svg+xml',
-  '.woff': 'application/font-woff',
-};
 
 /**
  * Log the request and response code.
@@ -79,7 +43,7 @@ function createRequestHandler(context) {
         fs.readFile(filePath)
           .then((fileData) => {
             const ext = path.parse(filePath).ext;
-            const mimeType = MIME_TYPES[ext] || 'text/plain';
+            const mimeType = SERVER_MIME_TYPES[ext] || 'text/plain';
 
             response.setHeader('Content-type', mimeType);
             response.end(fileData);
@@ -132,7 +96,7 @@ function createWatcherBuilderFactory(context) {
  * @param {import('./context.js').Context} context site build context
  */
 function monitorFileChanges(context) {
-  WATCHER_BUILDERS_PARAMS.map(createWatcherBuilderFactory(context)).forEach((watchedBuilder) => watchedBuilder.start());
+  SERVER_WATCHER_BUILDERS.map(createWatcherBuilderFactory(context)).forEach((watchedBuilder) => watchedBuilder.start());
 }
 
 /**

@@ -1,15 +1,6 @@
 import Metalsmith from 'metalsmith';
+import { FONTS_BUILD_OUTPUT_DIRECTORY, FONTS_BUILD_STEP_NAME } from '../../build-config.js';
 import { executeBuild } from './common.js';
-
-/**
- * Build step name.
- */
-const STEP_NAME = 'Fonts';
-
-/**
- * The name of the main style file.
- */
-const OUTPUT_DIRECTORY = 'fonts';
 
 /**
  * Execute the fonts building pipeline.
@@ -21,7 +12,7 @@ export function buildFonts(context) {
   // eslint-disable-next-line new-cap
   const instance = Metalsmith(context.projectDir)
     .source(context.fontsDir)
-    .destination(`${context.outputDir}/${OUTPUT_DIRECTORY}`)
+    .destination(`${context.outputDir}/${FONTS_BUILD_OUTPUT_DIRECTORY}`)
     .clean(false);
-  return executeBuild(instance, STEP_NAME);
+  return executeBuild(instance, FONTS_BUILD_STEP_NAME);
 }

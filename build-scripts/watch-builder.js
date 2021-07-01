@@ -1,4 +1,5 @@
 import chokidar from 'chokidar';
+import * as builder from './builder.js';
 import { createPrivateProperty } from './utils.js';
 
 /**
@@ -10,13 +11,18 @@ export class WatchBuilder {
    * Default class constructor.
    *
    * @param {import('./context.js').Context} context site building context
-   * @param {Function} buildFunction pipeline building function
+   * @param {string} buildFunctionName pipeline building function
    * @param {string[]} paths watcher paths
    */
-  constructor(context, buildFunction, paths) {
+  constructor(context, buildFunctionName, paths) {
+    if (!Object.prototype.hasOwnProperty.call(builder, buildFunctionName)) {
+      throw new Error(`No builder function named "${buildFunctionName}" is defined`);
+    }
+
+    // TODO make native JavaScript private class properties when they stabilize (an ESLint stops nagging about them)
     createPrivateProperty(this, 'running', false);
     createPrivateProperty(this, 'context', context);
-    createPrivateProperty(this, 'builder', buildFunction);
+    createPrivateProperty(this, 'builder', builder[buildFunctionName]);
     createPrivateProperty(this, 'paths', paths);
   }
 

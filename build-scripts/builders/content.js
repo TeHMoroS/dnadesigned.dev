@@ -2,38 +2,12 @@ import { minify } from 'html-minifier';
 import Metalsmith from 'metalsmith';
 import layouts from 'metalsmith-layouts';
 import markdown from 'metalsmith-markdown';
+import {
+  BUILD_CONTENT_INPUT_DEFAULT_FILE,
+  BUILD_CONTENT_MINIFIER_PROPERTIES,
+  BUILD_CONTENT_STEP_NAME,
+} from '../../build-config.js';
 import { executeBuild } from './common.js';
-
-/**
- * Build step name.
- */
-const STEP_NAME = 'Content';
-
-/**
- * Default layout file name.
- */
-const INPUT_DEFAULT_FILE = 'default.hbs';
-
-/**
- * HTMLMinifier properties to use when minifying content.
- *
- * @type {import('html-minifier').Options}
- */
-const MINIFIER_PROPERTIES = {
-  caseSensitive: false,
-  collapseBooleanAttributes: true,
-  collapseWhitespace: true,
-  decodeEntities: true,
-  html5: true,
-  keepClosingSlash: true,
-  minifyCSS: true,
-  minifyJS: true,
-  removeAttributeQuotes: true,
-  removeComments: true,
-  removeEmptyAttributes: true,
-  removeRedundantAttributes: true,
-  useShortDoctype: true,
-};
 
 /**
  * Add a plugin for Metalsmith that will embed the LiveReload script code when running in watch mode.
@@ -56,9 +30,9 @@ function embedLiveReloadIfWatchMode(context, instance) {
         file.contents.toString().replace(
           '</body>',
           `  <script>
-document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-':${context.liveReloadPort}/livereload.js?snipver=1"></' + 'script>')
-</script>\n</body>`
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + \
+':${context.liveReloadPort}/livereload.js?snipver=1"></' + 'script>');
+  </script>\n</body>`
         )
       );
     }
@@ -85,7 +59,7 @@ function minifyIfForProduction(context, instance) {
         }
 
         const file = files[fileName];
-        file.contents = Buffer.from(minify(file.contents.toString(), MINIFIER_PROPERTIES));
+        file.contents = Buffer.from(minify(file.contents.toString(), BUILD_CONTENT_MINIFIER_PROPERTIES));
       }
       done(null, files, metalsmith);
     } catch (e) {
@@ -110,7 +84,7 @@ export function buildContent(context) {
     .use(markdown())
     .use(
       layouts({
-        default: INPUT_DEFAULT_FILE,
+        default: BUILD_CONTENT_INPUT_DEFAULT_FILE,
         directory: context.layoutsDir,
       })
     );
@@ -118,5 +92,5 @@ export function buildContent(context) {
   embedLiveReloadIfWatchMode(context, instance);
   minifyIfForProduction(context, instance);
 
-  return executeBuild(instance, STEP_NAME);
+  return executeBuild(instance, BUILD_CONTENT_STEP_NAME);
 }
