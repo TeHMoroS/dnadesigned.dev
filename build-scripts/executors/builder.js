@@ -1,13 +1,13 @@
-import { buildContent } from './builders/content.js';
-import { buildFonts } from './builders/fonts.js';
-import { buildImages } from './builders/images.js';
-import { buildStyles } from './builders/styles.js';
+import { buildContent } from '../builders/content.js';
+import { buildFonts } from '../builders/fonts.js';
+import { buildImages } from '../builders/images.js';
+import { buildStyles } from '../builders/styles.js';
 
 // re-export the builders
-export { buildContent } from './builders/content.js';
-export { buildFonts } from './builders/fonts.js';
-export { buildImages } from './builders/images.js';
-export { buildStyles } from './builders/styles.js';
+export { buildContent } from '../builders/content.js';
+export { buildFonts } from '../builders/fonts.js';
+export { buildImages } from '../builders/images.js';
+export { buildStyles } from '../builders/styles.js';
 
 /**
  * Execute the full building pipeline.

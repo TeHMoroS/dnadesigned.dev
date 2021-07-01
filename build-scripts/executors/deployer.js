@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { Client } from 'ssh2';
-import { SITE_OUTPUT_FILE } from '../build-config.js';
+import { SITE_OUTPUT_FILE } from '../../build-config.js';
 import { packageSite } from './packager.js';
 
 /**

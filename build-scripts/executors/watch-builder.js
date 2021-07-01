@@ -1,6 +1,6 @@
 import chokidar from 'chokidar';
+import { createPrivateProperty } from '../utils.js';
 import * as builder from './builder.js';
-import { createPrivateProperty } from './utils.js';
 
 /**
  * A class representing a watch builder - a builder that's launched when specific files are changed. It reacts to file
@@ -10,7 +10,7 @@ export class WatchBuilder {
   /**
    * Default class constructor.
    *
-   * @param {import('./context.js').Context} context site building context
+   * @param {import('../context.js').Context} context site building context
    * @param {string} buildFunctionName pipeline building function
    * @param {string[]} paths watcher paths
    */

@@ -1,8 +1,8 @@
-import { buildAll } from './build-scripts/builder.js';
 import { Context } from './build-scripts/context.js';
-import { deploy } from './build-scripts/deployer.js';
-import { packageSite } from './build-scripts/packager.js';
-import { listen } from './build-scripts/server.js';
+import { buildAll } from './build-scripts/executors/builder.js';
+import { deploy } from './build-scripts/executors/deployer.js';
+import { packageSite } from './build-scripts/executors/packager.js';
+import { listen } from './build-scripts/executors/server.js';
 
 const context = Context.create();
 

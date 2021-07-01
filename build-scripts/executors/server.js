@@ -3,7 +3,7 @@ import http from 'http';
 import livereload from 'livereload';
 import path from 'path';
 import url from 'url';
-import { SERVER_MIME_TYPES, SERVER_WATCHER_BUILDERS } from '../build-config.js';
+import { SERVER_MIME_TYPES, SERVER_WATCHER_BUILDERS } from '../../build-config.js';
 import { WatchBuilder } from './watch-builder.js';
 
 /**
