@@ -5,7 +5,7 @@ import { buildAll } from './builder.js';
 /**
  * Execute the building pipeline and package the results.
  *
- * @param {import('./context.js').Context} context site build context
+ * @param {import('../context.js').Context} context site build context
  * @return {Promise} a promise that resolves on a successful package creation or gets rejected on error
  */
 export function packageSite(context) {

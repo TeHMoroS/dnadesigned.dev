@@ -79,8 +79,7 @@ export function buildContent(context) {
   const instance = Metalsmith(context.projectDir)
     .source(context.contentDir)
     .destination(context.outputDir)
-    // clean only in build, package or deploy mode
-    .clean(context.buildMode || context.packageMode || context.deployMode)
+    .clean(false)
     .use(markdown())
     .use(
       layouts({
@@ -92,5 +91,5 @@ export function buildContent(context) {
   embedLiveReloadIfWatchMode(context, instance);
   minifyIfForProduction(context, instance);
 
-  return executeBuild(instance, BUILD_CONTENT_STEP_NAME);
+  return executeBuild(context, instance, BUILD_CONTENT_STEP_NAME);
 }

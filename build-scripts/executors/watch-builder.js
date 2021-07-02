@@ -1,5 +1,4 @@
 import chokidar from 'chokidar';
-import { createPrivateProperty } from '../utils.js';
 import * as builder from './builder.js';
 
 /**
@@ -8,22 +7,45 @@ import * as builder from './builder.js';
  */
 export class WatchBuilder {
   /**
+   * Watch builder name.
+   * @type {string}
+   */
+  #name;
+
+  /**
+   * Site building context.
+   * @type {import('../context.js').Context}
+   */
+  #context;
+
+  /**
+   * Assigned building function.
+   * @type {Function}
+   */
+  #builder;
+
+  /**
+   * Paths to watch for changes.
+   * @type {string[]}
+   */
+  #paths;
+
+  /**
    * Default class constructor.
    *
    * @param {import('../context.js').Context} context site building context
-   * @param {string} buildFunctionName pipeline building function
+   * @param {{name: string, params: string[], build:string}} params pipeline building parameters
    * @param {string[]} paths watcher paths
    */
-  constructor(context, buildFunctionName, paths) {
-    if (!Object.prototype.hasOwnProperty.call(builder, buildFunctionName)) {
-      throw new Error(`No builder function named "${buildFunctionName}" is defined`);
+  constructor(context, params, paths) {
+    if (!Object.prototype.hasOwnProperty.call(builder, params.build)) {
+      throw new Error(`No builder function named "${params.build}" is defined`);
     }
 
-    // TODO make native JavaScript private class properties when they stabilize (an ESLint stops nagging about them)
-    createPrivateProperty(this, 'running', false);
-    createPrivateProperty(this, 'context', context);
-    createPrivateProperty(this, 'builder', builder[buildFunctionName]);
-    createPrivateProperty(this, 'paths', paths);
+    this.#name = params.name;
+    this.#context = context;
+    this.#builder = builder[params.build];
+    this.#paths = paths;
   }
 
   /**
@@ -31,16 +53,10 @@ export class WatchBuilder {
    */
   start() {
     chokidar
-      .watch(this.paths, {
+      .watch(this.#paths, {
         persistent: false,
         awaitWriteFinish: true,
       })
-      .on('all', () => {
-        if (this.running) {
-          return;
-        }
-        this.running = true;
-        this.builder(this.context).finally(() => (this.running = false));
-      });
+      .on('all', () => this.#builder(this.#context));
   }
 }

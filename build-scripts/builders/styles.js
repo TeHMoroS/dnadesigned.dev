@@ -5,26 +5,13 @@ import postcss from 'postcss';
 import postcssImport from 'postcss-import';
 import tailwind from 'tailwindcss';
 import {
-  STYLES_BUILD_MAIN_INPUT_FILE,
-  STYLES_BUILD_OUTPUT_FILE,
-  STYLES_BUILD_OUTPUT_MAP_FILE,
-  STYLES_BUILD_STEP_NAME,
+  BUILD_STYLES_MAIN_INPUT_FILE,
+  BUILD_STYLES_OUTPUT_FILE,
+  BUILD_STYLES_OUTPUT_MAP_FILE,
+  BUILD_STYLES_STEP_NAME,
 } from '../../build-config.js';
+import { emptyMetalsmithFiles } from '../utils.js';
 import { executeBuild } from './common.js';
-
-/**
- * Removes all files from the files object.
- *
- * @param {metalsmith.Files} files the object containing all files as properties
- */
-function removeAllFiles(files) {
-  for (const fileName in files) {
-    if (!Object.prototype.hasOwnProperty.call(files, fileName)) {
-      continue;
-    }
-    delete files[fileName];
-  }
-}
 
 /**
  * Execute the styles building pipeline.
@@ -39,31 +26,34 @@ export function buildStyles(context) {
     .destination(context.outputDir)
     .clean(false)
     .use((files, metalsmith, done) => {
-      if (!files[STYLES_BUILD_MAIN_INPUT_FILE]) {
+      if (!files[BUILD_STYLES_MAIN_INPUT_FILE]) {
         done(new Error('No main CSS file found'), files, metalsmith);
       }
 
-      const mainStyle = files[STYLES_BUILD_MAIN_INPUT_FILE];
-      removeAllFiles(files);
+      const mainStyle = files[BUILD_STYLES_MAIN_INPUT_FILE];
+      emptyMetalsmithFiles(files);
 
       const plugins = [postcssImport, tailwind, autoprefixer];
       if (context.production) {
         plugins.push(cssnano());
       }
 
+      // suppress Tailwind JIT warnings
+      process.env.JEST_WORKER_ID = undefined;
+
       postcss(plugins)
         .process(mainStyle.contents, {
-          from: `${context.stylesDir}/${STYLES_BUILD_MAIN_INPUT_FILE}`,
-          to: `${context.outputDir}/${STYLES_BUILD_OUTPUT_FILE}`,
+          from: `${context.stylesDir}/${BUILD_STYLES_MAIN_INPUT_FILE}`,
+          to: `${context.outputDir}/${BUILD_STYLES_OUTPUT_FILE}`,
           map: { inline: false },
         })
         .then((result) => {
-          files[STYLES_BUILD_OUTPUT_FILE] = {
+          files[BUILD_STYLES_OUTPUT_FILE] = {
             contents: Buffer.from(result.css),
           };
 
           if (result.map) {
-            files[STYLES_BUILD_OUTPUT_MAP_FILE] = {
+            files[BUILD_STYLES_OUTPUT_MAP_FILE] = {
               contents: Buffer.from(result.map.toString()),
             };
           }
@@ -75,5 +65,5 @@ export function buildStyles(context) {
         });
     });
 
-  return executeBuild(instance, STYLES_BUILD_STEP_NAME);
+  return executeBuild(context, instance, BUILD_STYLES_STEP_NAME);
 }

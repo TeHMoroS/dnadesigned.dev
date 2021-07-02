@@ -32,60 +32,64 @@ export const BUILD_CONTENT_MINIFIER_PROPERTIES = {
 /**
  * Fonts build step name.
  */
-export const FONTS_BUILD_STEP_NAME = 'Fonts';
+export const BUILD_FONTS_STEP_NAME = 'Fonts';
 
 /**
  * Fonts build output directory.
  */
-export const FONTS_BUILD_OUTPUT_DIRECTORY = 'fonts';
+export const BUILD_FONTS_OUTPUT_DIRECTORY = 'fonts';
 
 /**
  * Images build step name.
  */
-export const IMAGES_BUILD_STEP_NAME = 'Images';
+export const BUILD_IMAGES_STEP_NAME = 'Images';
 
 /**
  * Images build output directory.
  */
-export const IMAGES_BUILD_OUTPUT_DIRECTORY = 'images';
+export const BUILD_IMAGES_OUTPUT_DIRECTORY = 'images';
 
 /**
  * Styles build step name.
  */
-export const STYLES_BUILD_STEP_NAME = 'Styles';
+export const BUILD_STYLES_STEP_NAME = 'Styles';
 
 /**
  * Styles build main styles file.
  */
-export const STYLES_BUILD_MAIN_INPUT_FILE = 'index.css';
+export const BUILD_STYLES_MAIN_INPUT_FILE = 'index.css';
 
 /**
  * Styles build output file name.
  */
-export const STYLES_BUILD_OUTPUT_FILE = 'styles.css';
+export const BUILD_STYLES_OUTPUT_FILE = 'styles.css';
 
 /**
  * Styles build output map file name.
  */
-export const STYLES_BUILD_OUTPUT_MAP_FILE = `${STYLES_BUILD_OUTPUT_FILE}.map`;
+export const BUILD_STYLES_OUTPUT_MAP_FILE = `${BUILD_STYLES_OUTPUT_FILE}.map`;
 
 /**
  * Server WatcherBuilder parameters structure.
  */
 export const SERVER_WATCHER_BUILDERS = [
   {
+    name: BUILD_CONTENT_STEP_NAME,
     params: ['layouts', 'content'],
     build: 'buildContent',
   },
   {
+    name: BUILD_STYLES_STEP_NAME,
     params: ['styles', 'layouts', 'content'],
     build: 'buildStyles',
   },
   {
+    name: BUILD_FONTS_STEP_NAME,
     params: ['fonts'],
     build: 'buildFonts',
   },
   {
+    name: BUILD_IMAGES_STEP_NAME,
     params: ['images'],
     build: 'buildImages',
   },

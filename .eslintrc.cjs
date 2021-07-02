@@ -5,8 +5,10 @@ module.exports = {
     node: true,
   },
   extends: ['eslint:recommended', 'google'],
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 12,
+    impliedStrict: true,
     sourceType: 'module',
   },
   // modify the rulesets to play nicely with prettier, which is less configurable

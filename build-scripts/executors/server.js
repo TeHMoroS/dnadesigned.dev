@@ -4,6 +4,7 @@ import livereload from 'livereload';
 import path from 'path';
 import url from 'url';
 import { SERVER_MIME_TYPES, SERVER_WATCHER_BUILDERS } from '../../build-config.js';
+import { clearBuildDirectory } from '../utils.js';
 import { WatchBuilder } from './watch-builder.js';
 
 /**
@@ -20,7 +21,7 @@ function logRequest(request, statusCode) {
 /**
  * Created a server request handler based on the site build context.
  *
- * @param {import('./context.js').Context} context site build context
+ * @param {import('../context.js').Context} context site build context
  * @returns {Function} server request handler
  */
 function createRequestHandler(context) {
@@ -72,7 +73,7 @@ function createRequestHandler(context) {
 /**
  * Create the WatherBuilder factory function.
  *
- * @param {import('./context.js').Context} context site build context
+ * @param {import('../context.js').Context} context site build context
  * @return WatcherBuilder factory
  */
 function createWatcherBuilderFactory(context) {
@@ -86,14 +87,14 @@ function createWatcherBuilderFactory(context) {
      * @type {string[]}
      */
     const paths = watcherBuilderParams.params.map((paramName) => context[`${paramName}Dir`]);
-    return new WatchBuilder(context, watcherBuilderParams.build, paths);
+    return new WatchBuilder(context, watcherBuilderParams, paths);
   };
 }
 
 /**
  * Monitor for project file changes and trigger a build when on is detected.
  *
- * @param {import('./context.js').Context} context site build context
+ * @param {import('../context.js').Context} context site build context
  */
 function monitorFileChanges(context) {
   SERVER_WATCHER_BUILDERS.map(createWatcherBuilderFactory(context)).forEach((watchedBuilder) => watchedBuilder.start());
@@ -105,9 +106,14 @@ function monitorFileChanges(context) {
  * Based on a small HTTP server implementation (but modernized) from
  * https://adrianmejia.com/building-a-node-js-static-file-server-files-over-http-using-es6/
  *
- * @param {import('./context.js').Context} context site build context
+ * @param {import('../context.js').Context} context site build context
  */
 export function listen(context) {
+  console.log(`Site server running at http://localhost:${context.serverPort}. \
+LiveReload server running at http://localhost:${context.liveReloadPort}`);
+
+  clearBuildDirectory(context);
+
   http.createServer(createRequestHandler(context)).listen(context.serverPort);
   livereload
     .createServer({
@@ -115,6 +121,4 @@ export function listen(context) {
     })
     .watch(context.outputDir);
   monitorFileChanges(context);
-  console.log(`Site server running at http://localhost:${context.serverPort}. \
-LiveReload server running at http://localhost:${context.liveReloadPort}`);
 }
