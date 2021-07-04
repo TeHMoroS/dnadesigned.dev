@@ -9,6 +9,8 @@ import {
   BUILD_STYLES_OUTPUT_FILE,
   BUILD_STYLES_OUTPUT_MAP_FILE,
 } from '../../build.config.js';
+// eslint-disable-next-line no-unused-vars
+import Context from '../context/context.class.js';
 import { emptyMetalsmithFiles } from '../utils.js';
 import AbstractBuilder from './abstract-builder.class.js';
 
@@ -18,7 +20,7 @@ import AbstractBuilder from './abstract-builder.class.js';
 export default class StylesBuilder extends AbstractBuilder {
   /**
    * Default constructor.
-   * @param {import('../context.js').Context} context site build context
+   * @param {Context} context site build context
    */
   constructor(context) {
     super('Styles', context, ['styles', 'layouts', 'content']);

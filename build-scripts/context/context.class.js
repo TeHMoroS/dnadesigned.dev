@@ -1,15 +1,13 @@
 import dotenv from 'dotenv';
-import { dirname, join, normalize } from 'path';
-import { fileURLToPath } from 'url';
 import {
   ENV_NAME_DEPLOY_DIRECTORY,
   ENV_NAME_DEPLOY_HOST,
   ENV_NAME_DEPLOY_PORT,
   ENV_NAME_DEPLOY_USER_KEY,
   ENV_NAME_DEPLOY_USER_NAME,
-} from '../build.config.js';
-import { BuildListener } from './listeners/build-listener.js';
-import { getEnvironmentVariable } from './utils.js';
+} from '../../build.config.js';
+import { getEnvironmentVariable } from '../utils.js';
+import BuildListener from './build-listener.class.js';
 
 /**
  * Build modes.
@@ -24,7 +22,7 @@ const MODES = Object.freeze({
 /**
  * Class that represents a site build context, containing all needed parameters for the build process.
  */
-export class Context {
+export default class Context {
   /**
    * Build mode.
    * @type {{readonly [key: string]: string}}
@@ -61,11 +59,9 @@ export class Context {
   constructor() {
     dotenv.config();
 
-    const moduleFilePath = fileURLToPath(import.meta.url);
-
     this.#mode = this.#evaluateMode();
     this.#forcedProductionBuild = process.argv.includes('--prod');
-    this.#projectDirectory = normalize(join(dirname(moduleFilePath), '..'));
+    this.#projectDirectory = process.argv[1].replace(/[/\\]index\.js$/, '');
     this.#executions = [];
     this.#executionListeners = [BuildListener.create()];
   }

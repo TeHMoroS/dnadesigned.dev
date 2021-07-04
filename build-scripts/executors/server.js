@@ -10,6 +10,8 @@ import FontsBuilder from '../builders/fonts-builder.class.js';
 import ImagesBuilder from '../builders/images-builder.class.js';
 import ScriptsBuilder from '../builders/scripts-builder.class.js';
 import StylesBuilder from '../builders/styles-builder.class.js';
+// eslint-disable-next-line no-unused-vars
+import Context from '../context/context.class.js';
 
 /**
  * Log the request and response code.
@@ -25,7 +27,7 @@ function logRequest(request, statusCode) {
 /**
  * Created a server request handler based on the site build context.
  *
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  * @returns {Function} server request handler
  */
 function createRequestHandler(context) {
@@ -78,7 +80,7 @@ function createRequestHandler(context) {
 
 /**
  * Monitor for project file changes and trigger a build when on is detected.
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  * @return {Promise} a promise that resolves when initial builds are done or rejectes on build failure
  */
 function monitorFileChanges(context) {
@@ -99,7 +101,7 @@ function monitorFileChanges(context) {
 
 /**
  * Run the content server and the LiveReload server.
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  */
 export function listen(context) {
   monitorFileChanges(context)

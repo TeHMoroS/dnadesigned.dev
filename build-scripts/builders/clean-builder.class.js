@@ -1,4 +1,6 @@
 import { rm } from 'fs/promises';
+// eslint-disable-next-line no-unused-vars
+import Context from '../context/context.class.js';
 import AbstractBuilder from './abstract-builder.class.js';
 
 /**
@@ -7,7 +9,7 @@ import AbstractBuilder from './abstract-builder.class.js';
 export default class CleanBuilder extends AbstractBuilder {
   /**
    * Default constructor.
-   * @param {import('../context.js').Context} context site build context
+   * @param {Context} context site build context
    */
   constructor(context) {
     super('Clean', context);

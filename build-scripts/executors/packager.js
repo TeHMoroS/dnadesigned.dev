@@ -1,11 +1,13 @@
 import tar from 'tar';
 import { SITE_OUTPUT_FILE } from '../../build.config.js';
+// eslint-disable-next-line no-unused-vars
+import Context from '../context/context.class.js';
 import { buildAll } from './builder.js';
 
 /**
  * Execute the building pipeline and package the results.
  *
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  * @return {Promise} a promise that resolves on a successful package creation or gets rejected on error
  */
 export function packageSite(context) {

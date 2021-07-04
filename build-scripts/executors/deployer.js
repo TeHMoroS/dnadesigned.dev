@@ -1,12 +1,14 @@
 import { readFile } from 'fs/promises';
 import { Client } from 'ssh2';
 import { SITE_OUTPUT_FILE } from '../../build.config.js';
+// eslint-disable-next-line no-unused-vars
+import Context from '../context/context.class.js';
 import { packageSite } from './packager.js';
 
 /**
  * Send the site package and return a promise that resolves on success or gets rejected on error.
  *
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  * @param {Buffer} key SSH private key
  * @return {Promise} file sending promise
  */
@@ -50,7 +52,7 @@ function doFileSend(context, key) {
 /**
  * Deploy the sent package and return a promise that resolves on success or gets rejected on error.
  *
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  * @param {Buffer} key SSH private key
  * @return {Promise} site deployment promise
  */
@@ -91,7 +93,7 @@ function doSiteDeploy(context, key) {
 /**
  * Adjust site directory permissions and return a promise that resolves on success or gets rejected on error.
  *
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  * @param {Buffer} key SSH private key
  * @return {Promise} site deployment promise
  */
@@ -136,7 +138,7 @@ function doAdjustPermissions(context, key) {
 /**
  * Execute the full building pipeline.
  *
- * @param {import('../context.js').Context} context site build context
+ * @param {Context} context site build context
  */
 export function deploy(context) {
   packageSite(context)

@@ -1,4 +1,4 @@
-import { Context } from './build-scripts/context.js';
+import Context from './build-scripts/context/context.class.js';
 import { buildAll } from './build-scripts/executors/builder.js';
 import { deploy } from './build-scripts/executors/deployer.js';
 import { packageSite } from './build-scripts/executors/packager.js';

@@ -1,5 +1,6 @@
 import chokidar from 'chokidar';
-import { Context } from '../context.js';
+// eslint-disable-next-line no-unused-vars
+import Context from '../context/context.class.js';
 
 /**
  * An abstract builder class. It supports a single execution or watching a collection of paths for changes before
@@ -21,7 +22,7 @@ export default class AbstractBuilder {
       throw new Error('Builder needs to be named');
     }
     if (!context) {
-      context = Context.create();
+      throw new Error('No context given while creating the builder');
     }
     this.#name = name;
     this.#context = context;

@@ -1,7 +1,7 @@
 /**
  * Listener monitoring the build process. It outputs that information on the terminal in a nice manner.
  */
-export class BuildListener {
+export default class BuildListener {
   #running;
   #interval;
   #startTime;
