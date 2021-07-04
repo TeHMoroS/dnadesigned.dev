@@ -21,7 +21,7 @@ export default class StylesBuilder extends AbstractBuilder {
    * @param {import('../context.js').Context} context site build context
    */
   constructor(context) {
-    super('Styles', context);
+    super('Styles', context, ['styles', 'layouts', 'content']);
   }
 
   /**

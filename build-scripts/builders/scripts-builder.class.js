@@ -11,7 +11,7 @@ export default class ScriptsBuilder extends AbstractBuilder {
    * @param {import('../context.js').Context} context site build context
    */
   constructor(context) {
-    super('Scripts', context);
+    super('Scripts', context, ['scripts']);
   }
 
   /**

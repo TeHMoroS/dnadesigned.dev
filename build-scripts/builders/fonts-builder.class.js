@@ -11,7 +11,7 @@ export default class FontsBuilder extends AbstractBuilder {
    * @param {import('../context.js').Context} context site build context
    */
   constructor(context) {
-    super('Fonts', context);
+    super('Fonts', context, ['fonts']);
   }
 
   /**

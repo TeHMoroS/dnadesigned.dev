@@ -1,5 +1,3 @@
-import { rmSync } from 'fs';
-
 /**
  * Returns a value of the specified environment variable.
  *
@@ -13,17 +11,6 @@ export function getEnvironmentVariable(name) {
     throw new Error(`${name} environment variable not specified`);
   }
   return value;
-}
-
-/**
- * Removes the build direcotry.
- * @param {import('./context.js').Context} context site building context
- */
-export function clearBuildDirectory(context) {
-  rmSync(context.buildDir, {
-    recursive: true,
-    force: true,
-  });
 }
 
 /**

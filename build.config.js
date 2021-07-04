@@ -1,9 +1,3 @@
-import ContentBuilder from './build-scripts/builders/content-builder.class.js';
-import FontsBuilder from './build-scripts/builders/fonts-builder.class.js';
-import ImagesBuilder from './build-scripts/builders/images-builder.class.js';
-import ScriptsBuilder from './build-scripts/builders/scripts-builder.class.js';
-import StylesBuilder from './build-scripts/builders/styles-builder.class.js';
-
 /**
  * Content build default layout file name.
  */
@@ -58,33 +52,6 @@ export const BUILD_STYLES_OUTPUT_FILE = 'styles.css';
  * Styles build output map file name.
  */
 export const BUILD_STYLES_OUTPUT_MAP_FILE = `${BUILD_STYLES_OUTPUT_FILE}.map`;
-
-/**
- * Server WatcherBuilder parameters structure.
- * @type {{params:string[], Builder: import('./build-scripts/builders/abstract-builder.class')}[]}
- */
-export const SERVER_WATCHER_BUILDERS = [
-  {
-    params: ['layouts', 'content'],
-    Builder: ContentBuilder.prototype.constructor,
-  },
-  {
-    params: ['styles', 'layouts', 'content'],
-    Builder: StylesBuilder.prototype.constructor,
-  },
-  {
-    params: ['scripts'],
-    Builder: ScriptsBuilder.prototype.constructor,
-  },
-  {
-    params: ['fonts'],
-    Builder: FontsBuilder.prototype.constructor,
-  },
-  {
-    params: ['images'],
-    Builder: ImagesBuilder.prototype.constructor,
-  },
-];
 
 /**
  * Server supported MIME types.

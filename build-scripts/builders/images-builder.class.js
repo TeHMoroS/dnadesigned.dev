@@ -12,7 +12,7 @@ export default class ImagesBuilder extends AbstractBuilder {
    * @param {import('../context.js').Context} context site build context
    */
   constructor(context) {
-    super('Images', context);
+    super('Images', context, ['images']);
   }
 
   /**
