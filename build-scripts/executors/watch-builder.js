@@ -1,5 +1,4 @@
 import chokidar from 'chokidar';
-import * as builder from './builder.js';
 
 /**
  * A class representing a watch builder - a builder that's launched when specific files are changed. It reacts to file
@@ -7,20 +6,8 @@ import * as builder from './builder.js';
  */
 export class WatchBuilder {
   /**
-   * Watch builder name.
-   * @type {string}
-   */
-  #name;
-
-  /**
-   * Site building context.
-   * @type {import('../context.js').Context}
-   */
-  #context;
-
-  /**
    * Assigned building function.
-   * @type {Function}
+   * @type {import('../builders/abstract-builder.class')}
    */
   #builder;
 
@@ -34,17 +21,15 @@ export class WatchBuilder {
    * Default class constructor.
    *
    * @param {import('../context.js').Context} context site building context
-   * @param {{name: string, params: string[], build:string}} params pipeline building parameters
+   * @param {{params: string[], Builder: string}} watcherConfig watcher configuration parameters
    * @param {string[]} paths watcher paths
    */
-  constructor(context, params, paths) {
-    if (!Object.prototype.hasOwnProperty.call(builder, params.build)) {
-      throw new Error(`No builder function named "${params.build}" is defined`);
+  constructor(context, watcherConfig, paths) {
+    if (!Object.prototype.hasOwnProperty.call(watcherConfig, 'Builder')) {
+      throw new Error(`No builder defined for params ${watcherConfig.params}`);
     }
 
-    this.#name = params.name;
-    this.#context = context;
-    this.#builder = builder[params.build];
+    this.#builder = new watcherConfig.Builder(context);
     this.#paths = paths;
   }
 
@@ -57,6 +42,6 @@ export class WatchBuilder {
         persistent: false,
         awaitWriteFinish: true,
       })
-      .on('all', () => this.#builder(this.#context));
+      .on('all', () => this.#builder.execute());
   }
 }

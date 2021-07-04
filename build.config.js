@@ -1,7 +1,8 @@
-/**
- * Content build step name.
- */
-export const BUILD_CONTENT_STEP_NAME = 'Content';
+import ContentBuilder from './build-scripts/builders/content-builder.class.js';
+import FontsBuilder from './build-scripts/builders/fonts-builder.class.js';
+import ImagesBuilder from './build-scripts/builders/images-builder.class.js';
+import ScriptsBuilder from './build-scripts/builders/scripts-builder.class.js';
+import StylesBuilder from './build-scripts/builders/styles-builder.class.js';
 
 /**
  * Content build default layout file name.
@@ -10,7 +11,6 @@ export const BUILD_CONTENT_INPUT_DEFAULT_FILE = 'default.hbs';
 
 /**
  * Content build HTMLMinifier properties to use when minifying content.
- *
  * @type {import('html-minifier').Options}
  */
 export const BUILD_CONTENT_MINIFIER_PROPERTIES = {
@@ -30,19 +30,9 @@ export const BUILD_CONTENT_MINIFIER_PROPERTIES = {
 };
 
 /**
- * Fonts build step name.
- */
-export const BUILD_FONTS_STEP_NAME = 'Fonts';
-
-/**
  * Fonts build output directory.
  */
 export const BUILD_FONTS_OUTPUT_DIRECTORY = 'fonts';
-
-/**
- * Images build step name.
- */
-export const BUILD_IMAGES_STEP_NAME = 'Images';
 
 /**
  * Images build output directory.
@@ -50,9 +40,9 @@ export const BUILD_IMAGES_STEP_NAME = 'Images';
 export const BUILD_IMAGES_OUTPUT_DIRECTORY = 'images';
 
 /**
- * Styles build step name.
+ * Scripts build output directory.
  */
-export const BUILD_STYLES_STEP_NAME = 'Styles';
+export const BUILD_SCRIPTS_OUTPUT_DIRECTORY = 'scripts';
 
 /**
  * Styles build main styles file.
@@ -71,32 +61,34 @@ export const BUILD_STYLES_OUTPUT_MAP_FILE = `${BUILD_STYLES_OUTPUT_FILE}.map`;
 
 /**
  * Server WatcherBuilder parameters structure.
+ * @type {{params:string[], Builder: import('./build-scripts/builders/abstract-builder.class')}[]}
  */
 export const SERVER_WATCHER_BUILDERS = [
   {
-    name: BUILD_CONTENT_STEP_NAME,
     params: ['layouts', 'content'],
-    build: 'buildContent',
+    Builder: ContentBuilder.prototype.constructor,
   },
   {
-    name: BUILD_STYLES_STEP_NAME,
     params: ['styles', 'layouts', 'content'],
-    build: 'buildStyles',
+    Builder: StylesBuilder.prototype.constructor,
   },
   {
-    name: BUILD_FONTS_STEP_NAME,
+    params: ['scripts'],
+    Builder: ScriptsBuilder.prototype.constructor,
+  },
+  {
     params: ['fonts'],
-    build: 'buildFonts',
+    Builder: FontsBuilder.prototype.constructor,
   },
   {
-    name: BUILD_IMAGES_STEP_NAME,
     params: ['images'],
-    build: 'buildImages',
+    Builder: ImagesBuilder.prototype.constructor,
   },
 ];
 
 /**
  * Server supported MIME types.
+ * @type {{[type: string]: string}}
  */
 export const SERVER_MIME_TYPES = {
   '.html': 'text/html',

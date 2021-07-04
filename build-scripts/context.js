@@ -7,7 +7,7 @@ import {
   ENV_NAME_DEPLOY_PORT,
   ENV_NAME_DEPLOY_USER_KEY,
   ENV_NAME_DEPLOY_USER_NAME,
-} from '../build-config.js';
+} from '../build.config.js';
 import { BuildListener } from './listeners/build-listener.js';
 import { getEnvironmentVariable } from './utils.js';
 
@@ -148,6 +148,14 @@ export class Context {
    */
   get stylesDir() {
     return `${this.#projectDirectory}/styles`;
+  }
+
+  /**
+   * Returns the scripts directory absolute path.
+   * @type {string}
+   */
+  get scriptsDir() {
+    return `${this.#projectDirectory}/scripts`;
   }
 
   /**

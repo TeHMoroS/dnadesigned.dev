@@ -5,6 +5,15 @@ Project's goals:
 -   create a site building/generation tools for [dnadesigned.dev](https://dnadesigned.dev);
 -   a learning project.
 
+The overall structure of this project is based around the concept of executors and builders, where:
+
+-   executors are responsbile for executing different tasks (building, packaging, deploying, etc.);
+-   builders are responsible for the different site building pipelines (content, styles, etc.);
+-   other classes for handling non-building tasks (SSH connections, compression, etc.).
+
+The executors launch depending on the command line parameters and employ builders and other classes to complete
+the given task.
+
 ## Site building
 
 The tools here should work on a "fire and forget" basis, so you just write content, launch the tools and it's done.
@@ -20,7 +29,7 @@ The tools mentioned are:
 ### Site generation
 
 This is a fairly standard static site generation process. Originally based on [Metalsmith](https://metalsmith.io/) with
-some standard and custom plugins (see package.json from early commits of the project). Metalsmith has been used here
+some standard and custom plugins (see `package.json` from early commits of the project). Metalsmith has been used here
 in two roles:
 
 -   as a static site generator, which it advertises itself as;

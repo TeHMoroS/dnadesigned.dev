@@ -1,5 +1,5 @@
 import tar from 'tar';
-import { SITE_OUTPUT_FILE } from '../../build-config.js';
+import { SITE_OUTPUT_FILE } from '../../build.config.js';
 import { buildAll } from './builder.js';
 
 /**
