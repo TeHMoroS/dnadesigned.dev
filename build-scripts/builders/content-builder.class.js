@@ -16,7 +16,7 @@ export default class ContentBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Content', context, ['layouts', 'content']);
+    super('Content', context, ['layouts', 'src']);
   }
 
   /**
