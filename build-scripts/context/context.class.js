@@ -13,9 +13,24 @@ import BuildListener from './build-listener.class.js';
  * Build modes.
  */
 const MODES = Object.freeze({
+  /**
+   * Build mode - build the site.
+   */
   BUILD: 0,
+
+  /**
+   * Watch mode - start a dev server and watch for changes to trigger a rebuild.
+   */
   WATCH: 1,
+
+  /**
+   * Packaging mode - build and create a production package.
+   */
   PACKAGE: 2,
+
+  /**
+   * Deploy mode - build, create a production package and deploy to the production server.
+   */
   DEPLOY: 3,
 });
 
@@ -25,7 +40,7 @@ const MODES = Object.freeze({
 export default class Context {
   /**
    * Build mode.
-   * @type {{readonly [key: string]: string}}
+   * @type {number}
    */
   #mode;
 

@@ -2,8 +2,22 @@
  * Listener monitoring the build process. It outputs that information on the terminal in a nice manner.
  */
 export default class BuildListener {
+  /**
+   * A state object containing the state of ran builders.
+   * @type {{[builderName: string]: {start: number, stop?: number}}}
+   */
   #running;
+
+  /**
+   * The timer which updated the output on the terminal.
+   * @type {NodeJS.Timeout}
+   */
   #interval;
+
+  /**
+   * The time at which the building process has started.
+   * @type {number}
+   */
   #startTime;
 
   /**
@@ -62,10 +76,7 @@ export default class BuildListener {
     let output = '\n\n\n\n\n\x1b[5A\x1b[s';
     let stillRunning = false;
     // add status of every registered executor
-    for (const executor in this.#running) {
-      if (!Object.prototype.hasOwnProperty.call(this.#running, executor)) {
-        continue;
-      }
+    for (const executor of Object.getOwnPropertyNames(this.#running)) {
       output += `\x1b[KExecuting build step "${executor}"\t- `;
       const data = this.#running[executor];
       const running = !data.stop;

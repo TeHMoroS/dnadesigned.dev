@@ -45,10 +45,7 @@ export default class ImagesBuilder extends AbstractBuilder {
 
     instance.use((files, metalsmith, done) => {
       try {
-        for (const fileName in files) {
-          if (!Object.prototype.hasOwnProperty.call(files, fileName)) {
-            continue;
-          }
+        for (const fileName of Object.getOwnPropertyNames(files)) {
           // skip non-SVG files
           if (!fileName.endsWith('.svg')) {
             continue;

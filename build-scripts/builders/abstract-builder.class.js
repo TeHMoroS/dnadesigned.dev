@@ -7,8 +7,22 @@ import Context from '../context/context.class.js';
  * executing.
  */
 export default class AbstractBuilder {
+  /**
+   * Builder name.
+   * @type {string}
+   */
   #name;
+
+  /**
+   * Site build context.
+   * @type {Context}
+   */
   #context;
+
+  /**
+   * An array of paths to watch for changes in watch mode.
+   * @type {string[]}
+   */
   #paths;
 
   /**
@@ -19,10 +33,10 @@ export default class AbstractBuilder {
    */
   constructor(name, context, paths) {
     if (!name) {
-      throw new Error('Builder needs to be named');
+      throw new Error('Builder needs to be named!');
     }
     if (!context) {
-      throw new Error('No context given while creating the builder');
+      throw new Error('No context given while creating the builder!');
     }
     this.#name = name;
     this.#context = context;

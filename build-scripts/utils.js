@@ -17,10 +17,7 @@ export function getEnvironmentVariable(name) {
  * @param {import('metalsmith').Files} files the object containing all files as properties
  */
 export function emptyMetalsmithFiles(files) {
-  for (const fileName in files) {
-    if (!Object.prototype.hasOwnProperty.call(files, fileName)) {
-      continue;
-    }
+  for (const fileName of Object.getOwnPropertyNames(files)) {
     delete files[fileName];
   }
 }

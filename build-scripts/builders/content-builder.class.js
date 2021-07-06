@@ -55,10 +55,7 @@ export default class ContentBuilder extends AbstractBuilder {
     }
 
     instance.use((files, metalsmith, done) => {
-      for (const fileName in files) {
-        if (!Object.prototype.hasOwnProperty.call(files, fileName)) {
-          continue;
-        }
+      for (const fileName of Object.getOwnPropertyNames(files)) {
         const file = files[fileName];
         file.contents = Buffer.from(
           file.contents.toString().replace(
@@ -87,11 +84,7 @@ export default class ContentBuilder extends AbstractBuilder {
 
     instance.use((files, metalsmith, done) => {
       try {
-        for (const fileName in files) {
-          if (!Object.prototype.hasOwnProperty.call(files, fileName)) {
-            continue;
-          }
-
+        for (const fileName of Object.getOwnPropertyNames(files)) {
           const file = files[fileName];
           file.contents = Buffer.from(minify(file.contents.toString(), BUILD_CONTENT_MINIFIER_PROPERTIES));
         }
