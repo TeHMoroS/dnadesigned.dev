@@ -23,7 +23,7 @@ export default class StylesBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Styles', context, ['styles', 'layouts', 'content']);
+    super('Styles', context, ['styles', 'layouts', 'src']);
   }
 
   /**
