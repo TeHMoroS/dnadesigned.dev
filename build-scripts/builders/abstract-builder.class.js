@@ -60,6 +60,7 @@ export default class AbstractBuilder {
       const instance = this._prepareBuild();
       if (!instance) {
         reject(new Error('No Metalsmith instance supplied!'));
+        return;
       }
 
       this.context.signalExecution(this.#name);
@@ -84,7 +85,8 @@ export default class AbstractBuilder {
           persistent: false,
           awaitWriteFinish: true,
         })
-        .on('all', () => this.execute().then(resolve).catch(reject));
+        .on('all', () => this.execute().then(resolve).catch(reject))
+        .on('error', reject);
     });
   }
 

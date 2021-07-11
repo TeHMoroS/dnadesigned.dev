@@ -26,7 +26,7 @@ export default class ServeExecutor extends AbstractExecutor {
    * @return {boolean} true, if the executor can run
    */
   supports() {
-    return this.context.watchMode;
+    return this.context.serveMode;
   }
 
   /**

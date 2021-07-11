@@ -21,7 +21,7 @@ const MODES = Object.freeze({
   /**
    * Watch mode - start a dev server and watch for changes to trigger a rebuild.
    */
-  WATCH: 1,
+  SERVE: 1,
 
   /**
    * Packaging mode - build and create a production package.
@@ -98,11 +98,11 @@ export default class Context {
   }
 
   /**
-   * Flag signaling if we're in watch mode (continuous build mode).
+   * Flag signaling if we're in serve mode (continuous build mode with a dev HTTP server running).
    * @type {boolean}
    */
-  get watchMode() {
-    return this.#mode === MODES.WATCH;
+  get serveMode() {
+    return this.#mode === MODES.SERVE;
   }
 
   /**
@@ -130,11 +130,11 @@ export default class Context {
   }
 
   /**
-   * Returns the base project directory absolute path.
+   * Returns the project sources directory absolute path.
    * @type {string}
    */
-  get projectDir() {
-    return this.#projectDirectory;
+  get sourcesDir() {
+    return `${this.#projectDirectory}/src`;
   }
 
   /**
@@ -142,7 +142,7 @@ export default class Context {
    * @type {string}
    */
   get contentDir() {
-    return `${this.#projectDirectory}/src`;
+    return `${this.sourcesDir}/content`;
   }
 
   /**
@@ -150,7 +150,7 @@ export default class Context {
    * @type {string}
    */
   get layoutsDir() {
-    return `${this.#projectDirectory}/layouts`;
+    return `${this.sourcesDir}/layouts`;
   }
 
   /**
@@ -158,7 +158,7 @@ export default class Context {
    * @type {string}
    */
   get stylesDir() {
-    return `${this.#projectDirectory}/styles`;
+    return `${this.sourcesDir}/styles`;
   }
 
   /**
@@ -166,7 +166,7 @@ export default class Context {
    * @type {string}
    */
   get scriptsDir() {
-    return `${this.#projectDirectory}/scripts`;
+    return `${this.sourcesDir}/scripts`;
   }
 
   /**
@@ -174,7 +174,7 @@ export default class Context {
    * @type {string}
    */
   get fontsDir() {
-    return `${this.#projectDirectory}/fonts`;
+    return `${this.sourcesDir}/fonts`;
   }
 
   /**
@@ -182,7 +182,7 @@ export default class Context {
    * @type {string}
    */
   get imagesDir() {
-    return `${this.#projectDirectory}/images`;
+    return `${this.sourcesDir}/images`;
   }
 
   /**
@@ -302,8 +302,8 @@ export default class Context {
     if (params.includes('package')) {
       return MODES.PACKAGE;
     }
-    if (params.includes('watch')) {
-      return MODES.WATCH;
+    if (params.includes('serve')) {
+      return MODES.SERVE;
     }
 
     return MODES.BUILD;

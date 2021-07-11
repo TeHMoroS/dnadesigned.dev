@@ -23,7 +23,7 @@ export default class StylesBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Styles', context, ['styles', 'layouts', 'src']);
+    super('Styles', context, [context.stylesDir, context.layoutsDir, context.contentDir]);
   }
 
   /**
@@ -31,9 +31,9 @@ export default class StylesBuilder extends AbstractBuilder {
    * @return {Metalsmith} a configurated Metalsmith instance
    */
   _prepareBuild() {
-    const { projectDir, stylesDir, outputDir, production } = this.context;
+    const { sourcesDir, stylesDir, outputDir, production } = this.context;
     // eslint-disable-next-line new-cap
-    const instance = Metalsmith(projectDir)
+    const instance = Metalsmith(sourcesDir)
       .source(stylesDir)
       .destination(outputDir)
       .clean(false)

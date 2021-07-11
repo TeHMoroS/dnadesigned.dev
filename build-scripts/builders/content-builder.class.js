@@ -16,7 +16,7 @@ export default class ContentBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Content', context, ['layouts', 'src']);
+    super('Content', context, [context.layoutsDir, context.contentDir]);
   }
 
   /**
@@ -24,9 +24,9 @@ export default class ContentBuilder extends AbstractBuilder {
    * @return {Metalsmith} a configurated Metalsmith instance
    */
   _prepareBuild() {
-    const { projectDir, contentDir, layoutsDir, outputDir } = this.context;
+    const { sourcesDir, contentDir, layoutsDir, outputDir } = this.context;
     // eslint-disable-next-line new-cap
-    const instance = Metalsmith(projectDir)
+    const instance = Metalsmith(sourcesDir)
       .source(contentDir)
       .destination(outputDir)
       .clean(false)
@@ -49,8 +49,8 @@ export default class ContentBuilder extends AbstractBuilder {
    * @param {Metalsmith} instance Metalsmith instance
    */
   #embedLiveReloadIfWatchMode(instance) {
-    const { watchMode, liveReloadPort } = this.context;
-    if (!watchMode) {
+    const { serveMode, liveReloadPort } = this.context;
+    if (!serveMode) {
       return;
     }
 

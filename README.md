@@ -22,7 +22,7 @@ This is the main goal of the project.
 The tools mentioned are:
 
 -   site generation;
--   dev mode;
+-   serve (dev) mode;
 -   packaging;
 -   deployment.
 
@@ -40,7 +40,7 @@ In short, the building process is divided into several independent pipelines for
 and images, each with it's own plugins. The process can be run in development mode or the production mode,
 the difference being site minification in production mode.
 
-### Dev mode
+### Serve (dev) mode
 
 This tools runs a development server that's serving the generated content and watches for any changes to the sources
 to trigger a build and reload the page.

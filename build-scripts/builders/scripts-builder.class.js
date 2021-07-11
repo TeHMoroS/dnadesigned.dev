@@ -13,7 +13,7 @@ export default class ScriptsBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Scripts', context, ['scripts']);
+    super('Scripts', context, [context.scriptsDir]);
   }
 
   /**
@@ -21,9 +21,9 @@ export default class ScriptsBuilder extends AbstractBuilder {
    * @return {Metalsmith} a configurated Metalsmith instance
    */
   _prepareBuild() {
-    const { projectDir, scriptsDir, outputDir } = this.context;
+    const { sourcesDir, scriptsDir, outputDir } = this.context;
     // eslint-disable-next-line new-cap
-    const instance = Metalsmith(projectDir)
+    const instance = Metalsmith(sourcesDir)
       .source(scriptsDir)
       .destination(`${outputDir}/${BUILD_SCRIPTS_OUTPUT_DIRECTORY}`)
       .clean(false);

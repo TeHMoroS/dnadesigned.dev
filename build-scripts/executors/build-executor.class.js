@@ -44,7 +44,7 @@ export default class BuildExecutor extends AbstractExecutor {
             new ScriptsBuilder(this.context),
             new ImagesBuilder(this.context),
             new FontsBuilder(this.context),
-          ].map((builder) => (this.context.watchMode ? builder.watch() : builder.execute()))
+          ].map((builder) => (this.context.serveMode ? builder.watch() : builder.execute()))
         )
       );
   }

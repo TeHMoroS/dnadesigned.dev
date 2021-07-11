@@ -6,11 +6,11 @@
   "type": "module",
   "scripts": {
     "build": "node index.js -- build",
-    "watch": "node index.js -- watch",
+    "serve": "node index.js -- serve",
     "package": "node index.js -- package",
     "deploy": "node index.js -- deploy",
     "build:prod": "node index.js -- build --prod",
-    "watch:prod": "node index.js -- watch --prod"
+    "serve:prod": "node index.js -- serve --prod"
   },
   "repository": {
     "type": "git",

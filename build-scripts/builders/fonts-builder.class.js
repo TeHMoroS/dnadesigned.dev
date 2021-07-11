@@ -13,7 +13,7 @@ export default class FontsBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Fonts', context, ['fonts']);
+    super('Fonts', context, [context.fontsDir]);
   }
 
   /**
@@ -21,9 +21,9 @@ export default class FontsBuilder extends AbstractBuilder {
    * @return {Metalsmith} a configurated Metalsmith instance
    */
   _prepareBuild() {
-    const { projectDir, fontsDir, outputDir } = this.context;
+    const { sourcesDir, fontsDir, outputDir } = this.context;
     // eslint-disable-next-line new-cap
-    const instance = Metalsmith(projectDir)
+    const instance = Metalsmith(sourcesDir)
       .source(fontsDir)
       .destination(`${outputDir}/${BUILD_FONTS_OUTPUT_DIRECTORY}`)
       .clean(false);

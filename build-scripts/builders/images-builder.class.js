@@ -14,7 +14,7 @@ export default class ImagesBuilder extends AbstractBuilder {
    * @param {Context} context site build context
    */
   constructor(context) {
-    super('Images', context, ['images']);
+    super('Images', context, [context.imagesDir]);
   }
 
   /**
@@ -22,9 +22,9 @@ export default class ImagesBuilder extends AbstractBuilder {
    * @return {Metalsmith} a configurated Metalsmith instance
    */
   _prepareBuild() {
-    const { projectDir, imagesDir, outputDir } = this.context;
+    const { sourcesDir, imagesDir, outputDir } = this.context;
     // eslint-disable-next-line new-cap
-    const instance = Metalsmith(projectDir)
+    const instance = Metalsmith(sourcesDir)
       .source(imagesDir)
       .destination(`${outputDir}/${BUILD_IMAGES_OUTPUT_DIRECTORY}`)
       .clean(false);
