@@ -63,9 +63,9 @@ export default class AbstractBuilder {
         return;
       }
 
-      this.context.signalExecution(this.#name);
+      this.context.signalBuilderStart(this.#name);
       instance.build((error) => {
-        this.context.signalDone(this.#name);
+        this.context.signalBuilderDone(this.#name);
         error ? reject(error) : resolve();
       });
     });

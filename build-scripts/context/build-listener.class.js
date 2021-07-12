@@ -40,22 +40,22 @@ export default class BuildListener {
   }
 
   /**
-   * Runs when a build pipeline starts. The method marks the time the given executor started.
-   * @param {string} executor pipeline executor's name
+   * Runs when a build pipeline starts. The method marks the time the given builder started.
+   * @param {string} builder pipeline buillder's name
    */
-  onStart(executor) {
-    this.#running[executor] = {
+  onStart(builder) {
+    this.#running[builder] = {
       start: Date.now(),
     };
     this.#printStatus();
   }
 
   /**
-   * Runs when a build pipeline finishes. The method marks the time the given executor finished.
-   * @param {string} executor pipeline executor's name
+   * Runs when a build pipeline finishes. The method marks the time the given builder finished.
+   * @param {string} builder pipeline builder's name
    */
-  onStop(executor) {
-    this.#running[executor].stop = Date.now();
+  onStop(builder) {
+    this.#running[builder].stop = Date.now();
     this.#printStatus();
   }
 
@@ -75,12 +75,12 @@ export default class BuildListener {
     // make space for what will be printing (5 lines will do), move back up and save the cursor position
     let output = '\n\n\n\n\n\x1b[5A\x1b[s';
     let stillRunning = false;
-    // add status of every registered executor
-    for (const executor of Object.getOwnPropertyNames(this.#running)) {
-      output += `\x1b[KExecuting build step "${executor}"\t- `;
-      const data = this.#running[executor];
+    // add status of every registered builder
+    for (const builder of Object.getOwnPropertyNames(this.#running)) {
+      output += `\x1b[KExecuting build step "${builder}"\t- `;
+      const data = this.#running[builder];
       const running = !data.stop;
-      // calculate the time the executor is taking to complete
+      // calculate the time the builder is taking to complete
       if (running) {
         output += `${Date.now() - data.start}ms\n`;
       } else {

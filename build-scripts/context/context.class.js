@@ -57,16 +57,16 @@ export default class Context {
   #projectDirectory;
 
   /**
-   * Array containing currently running executors.
+   * Array containing currently running builders.
    * @type {string[]}
    */
-  #executions;
+  #builderExecutions;
 
   /**
    * Array containing listeners that respond to execution start/stop events.
    * @type {Function[]}
    */
-  #executionListeners;
+  #builderExecutionListeners;
 
   /**
    * Default constructor - evaluates the site build context.
@@ -77,8 +77,8 @@ export default class Context {
     this.#mode = this.#evaluateMode();
     this.#forcedProductionBuild = process.argv.includes('--prod');
     this.#projectDirectory = process.argv[1].replace(/[/\\]index\.js$/, '');
-    this.#executions = [];
-    this.#executionListeners = [BuildListener.create()];
+    this.#builderExecutions = [];
+    this.#builderExecutionListeners = [BuildListener.create()];
   }
 
   /**
@@ -258,34 +258,34 @@ export default class Context {
   }
 
   /**
-   * Signals that an executor if about to begin execution.
-   * @param {string} executorName executor name
+   * Signals that a builder is about to begin execution.
+   * @param {string} builderName builder name
    * @return {boolean} true, if execution was successfully registered
    */
-  signalExecution(executorName) {
-    if (this.#executions.includes(executorName)) {
+  signalBuilderStart(builderName) {
+    if (this.#builderExecutions.includes(builderName)) {
       return false;
     }
-    if (this.#executions.length === 0) {
-      this.#executionListeners.forEach((listener) => listener.onBuildStart());
+    if (this.#builderExecutions.length === 0) {
+      this.#builderExecutionListeners.forEach((listener) => listener.onBuildStart());
     }
-    this.#executions.push(executorName);
-    this.#executionListeners.forEach((listener) => listener.onStart(executorName));
+    this.#builderExecutions.push(builderName);
+    this.#builderExecutionListeners.forEach((listener) => listener.onStart(builderName));
     return true;
   }
 
   /**
-   * Signals that an executor has finished execution.
-   * @param {string} executorName executor name
+   * Signals that a builder has finished execution.
+   * @param {string} builderName builder name
    */
-  signalDone(executorName) {
-    if (!this.#executions.includes(executorName)) {
+  signalBuilderDone(builderName) {
+    if (!this.#builderExecutions.includes(builderName)) {
       return;
     }
-    this.#executionListeners.forEach((listener) => listener.onStop(executorName));
-    this.#executions.splice(this.#executions.indexOf(executorName), 1);
-    if (this.#executions.length === 0) {
-      this.#executionListeners.forEach((listener) => listener.onBuildStop());
+    this.#builderExecutionListeners.forEach((listener) => listener.onStop(builderName));
+    this.#builderExecutions.splice(this.#builderExecutions.indexOf(builderName), 1);
+    if (this.#builderExecutions.length === 0) {
+      this.#builderExecutionListeners.forEach((listener) => listener.onBuildStop());
     }
   }
 
