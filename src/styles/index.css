@@ -5,7 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
-i {
-    font-style: normal;
-    text-decoration: none;
+@layer base {
+    i {
+        font-style: normal;
+        text-decoration: none;
+        white-space: pre;
+    }
 }

@@ -13,6 +13,7 @@ export const BUILD_CONTENT_MINIFIER_PROPERTIES = {
   collapseWhitespace: true,
   decodeEntities: true,
   html5: true,
+  ignoreCustomFragments: [/<i> +<\/i>/],
   keepClosingSlash: true,
   minifyCSS: true,
   minifyJS: true,
