@@ -1,8 +1,8 @@
 import Metalsmith from 'metalsmith';
-import { optimize } from 'svgo';
 import { BUILD_IMAGES_OUTPUT_DIRECTORY } from '../../build.config.js';
 // eslint-disable-next-line no-unused-vars
 import Context from '../context/context.class.js';
+import createImagesSVGMinifyPlugin from '../plugins/images-svg-minify-plugin.js';
 import AbstractBuilder from './abstract-builder.class.js';
 
 /**
@@ -27,37 +27,9 @@ export default class ImagesBuilder extends AbstractBuilder {
     const instance = Metalsmith(sourcesDir)
       .source(imagesDir)
       .destination(`${outputDir}/${BUILD_IMAGES_OUTPUT_DIRECTORY}`)
-      .clean(false);
-
-    this.#minifySvgIfForProduction(instance);
+      .clean(false)
+      .use(createImagesSVGMinifyPlugin(this.context));
 
     return instance;
-  }
-
-  /**
-   * Add a plugin for Metalsmith that will run SVG minification when running a production build.
-   * @param {Metalsmith} instance Metalsmith instance
-   */
-  #minifySvgIfForProduction(instance) {
-    if (!this.context.production) {
-      return;
-    }
-
-    instance.use((files, metalsmith, done) => {
-      try {
-        for (const fileName of Object.getOwnPropertyNames(files)) {
-          // skip non-SVG files
-          if (!fileName.endsWith('.svg')) {
-            continue;
-          }
-
-          const file = files[fileName];
-          file.contents = Buffer.from(optimize(file.contents.toString()).data);
-        }
-        done(null, files, metalsmith);
-      } catch (e) {
-        done(e, files, metalsmith);
-      }
-    });
   }
 }
