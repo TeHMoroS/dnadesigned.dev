@@ -8,6 +8,7 @@ import Context from '../context/context.class.js';
 /**
  * Creates an instance of the HTML minification plugin for Metalsmith.
  * @param {Context} context site build context
+ * @return {Function} Metalsmith plugin function
  */
 export default function createContentMinifyPlugin(context) {
   /**

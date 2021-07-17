@@ -6,6 +6,7 @@ import Context from '../context/context.class.js';
 /**
  * Creates an instance of the LiveReload code embedding plugin for Metalsmith.
  * @param {Context} context site build context
+ * @return {Function} Metalsmith plugin function
  */
 export default function createContentLiveReloadPlugin(context) {
   /**

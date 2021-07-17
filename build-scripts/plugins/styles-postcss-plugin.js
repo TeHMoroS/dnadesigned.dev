@@ -17,6 +17,7 @@ import { emptyMetalsmithFiles } from '../utils.js';
 /**
  * Creates an instance of the PostCSS styles processing plugin.
  * @param {Context} context site build context
+ * @return {Function} Metalsmith plugin function
  */
 export default function createStylesPostCSSPlugin(context) {
   /**
