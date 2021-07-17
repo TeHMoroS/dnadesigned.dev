@@ -4,6 +4,7 @@ import markdown from 'metalsmith-markdown';
 import { BUILD_CONTENT_INPUT_DEFAULT_FILE } from '../../build.config.js';
 // eslint-disable-next-line no-unused-vars
 import Context from '../context/context.class.js';
+import createContentAuthorPlugin from '../plugins/content-author-plugin.js';
 import createContentLiveReloadPlugin from '../plugins/content-live-reload-plugin.js';
 import createContentMinifyPlugin from '../plugins/content-minify-plugin.js';
 import AbstractBuilder from './abstract-builder.class.js';
@@ -31,6 +32,7 @@ export default class ContentBuilder extends AbstractBuilder {
       .source(contentDir)
       .destination(outputDir)
       .clean(false)
+      .use(createContentAuthorPlugin(this.context))
       .use(markdown())
       .use(
         layouts({

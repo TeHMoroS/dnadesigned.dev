@@ -98,7 +98,9 @@ Some of the things I do here might end up as posts on the site as well. :)
 I intend to replace everything in the `dependencies` section of the `package.json` file with custom, tailored
 implementations that do what I need.
 
-Custom implementation progress so far (what I've already replaced):
+Custom implementation progress so far (what I've already replaced/implemented using only what Node.js has out of
+the box, in order of implementation):
 
 -   the build tool workflow;
 -   web server for serving the generated site in dev mode;
+-   Git structure reading, extracting commit author's name for use as content's author;
