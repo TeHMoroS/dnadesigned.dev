@@ -6,7 +6,7 @@ import {
   ENV_NAME_DEPLOY_USER_KEY,
   ENV_NAME_DEPLOY_USER_NAME,
 } from '../../build.config.js';
-import { getEnvironmentVariable } from '../utils.js';
+import { getEnvironmentVariable } from '../utils/env-utils.js';
 import BuildListener from './build-listener.class.js';
 
 /**
@@ -127,6 +127,14 @@ export default class Context {
    */
   get production() {
     return this.#forcedProductionBuild || this.packageMode || this.deployMode;
+  }
+
+  /**
+   * Returns the project root directory absolute path.
+   * @type {string}
+   */
+  get projectDir() {
+    return this.#projectDirectory;
   }
 
   /**

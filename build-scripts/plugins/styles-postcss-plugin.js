@@ -12,7 +12,7 @@ import {
 } from '../../build.config.js';
 // eslint-disable-next-line no-unused-vars
 import Context from '../context/context.class.js';
-import { emptyMetalsmithFiles } from '../utils.js';
+import { emptyMetalsmithFiles } from '../utils/metalsmith-utils.js';
 
 /**
  * Creates an instance of the PostCSS styles processing plugin.
