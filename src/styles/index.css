@@ -1,14 +1,9 @@
 @import "./colors.css";
 @import "./fonts.css";
 
+@import "./main-page.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    i {
-        font-style: normal;
-        text-decoration: none;
-        white-space: pre;
-    }
-}
