@@ -194,6 +194,14 @@ export default class Context {
   }
 
   /**
+   * Returns the other content directory absolute path.
+   * @type {string}
+   */
+  get otherDir() {
+    return `${this.sourcesDir}/other`;
+  }
+
+  /**
    * Returns the build directory absolute path.
    * @type {string}
    */

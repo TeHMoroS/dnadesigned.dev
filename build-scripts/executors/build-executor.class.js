@@ -2,6 +2,7 @@ import CleanBuilder from '../builders/clean-builder.class.js';
 import ContentBuilder from '../builders/content-builder.class.js';
 import FontsBuilder from '../builders/fonts-builder.class.js';
 import ImagesBuilder from '../builders/images-builder.class.js';
+import OtherContentBuilder from '../builders/other-builder.class.js';
 import ScriptsBuilder from '../builders/scripts-builder.class.js';
 import StylesBuilder from '../builders/styles-builder.class.js';
 // eslint-disable-next-line no-unused-vars
@@ -44,6 +45,7 @@ export default class BuildExecutor extends AbstractExecutor {
             new ScriptsBuilder(this.context),
             new ImagesBuilder(this.context),
             new FontsBuilder(this.context),
+            new OtherContentBuilder(this.context),
           ].map((builder) => (this.context.serveMode ? builder.watch() : builder.execute()))
         )
       );

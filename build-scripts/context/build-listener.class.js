@@ -72,8 +72,11 @@ export default class BuildListener {
    * Pretty-prints the current build status, using some ASCII control codes for nicer output.
    */
   #printStatus() {
-    // make space for what will be printing (5 lines will do), move back up and save the cursor position
-    let output = '\n\n\n\n\n\x1b[5A\x1b[s';
+    // make space for what will be printing, move back up and save the cursor position
+    const builderCount = Object.keys(this.#running).length;
+    // dynamically adjust the number of rows needed (based on current builder count)
+    let output = `${new Array(builderCount).fill('\n', 0).join()}\x1b[${builderCount}A\x1b[s`;
+
     let stillRunning = false;
     // add status of every registered builder
     for (const builder of Object.getOwnPropertyNames(this.#running)) {

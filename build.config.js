@@ -4,6 +4,11 @@
 export const BUILD_CONTENT_INPUT_DEFAULT_FILE = 'default.hbs';
 
 /**
+ * Content build partials directory name.
+ */
+export const BUILD_CONTENT_LAYOUT_PARTIALS_DIRECTORY = 'partials';
+
+/**
  * Content build HTMLMinifier properties to use when minifying content.
  * @type {import('html-minifier').Options}
  */

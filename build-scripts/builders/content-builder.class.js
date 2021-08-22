@@ -1,7 +1,8 @@
 import Metalsmith from 'metalsmith';
+import discoverPartials from 'metalsmith-discover-partials';
 import layouts from 'metalsmith-layouts';
 import markdown from 'metalsmith-markdown';
-import { BUILD_CONTENT_INPUT_DEFAULT_FILE } from '../../build.config.js';
+import { BUILD_CONTENT_INPUT_DEFAULT_FILE, BUILD_CONTENT_LAYOUT_PARTIALS_DIRECTORY } from '../../build.config.js';
 // eslint-disable-next-line no-unused-vars
 import Context from '../context/context.class.js';
 import createContentAuthorPlugin from '../plugins/content-author-plugin.js';
@@ -34,6 +35,11 @@ export default class ContentBuilder extends AbstractBuilder {
       .clean(false)
       .use(createContentAuthorPlugin(this.context))
       .use(markdown())
+      .use(
+        discoverPartials({
+          directory: `${layoutsDir}/${BUILD_CONTENT_LAYOUT_PARTIALS_DIRECTORY}`,
+        })
+      )
       .use(
         layouts({
           default: BUILD_CONTENT_INPUT_DEFAULT_FILE,

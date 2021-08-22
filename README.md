@@ -109,3 +109,10 @@ the box, in order of implementation):
 -   simple web server - for serving the generated site in dev mode;
 -   Git structure parsing and extracting commit and tree data - for use when evaluating the content authors (the author
     of the first commit that mentiones the given content file is automatically assigned as the content author);
+
+### Additional TODOs
+
+-   generate a site.webmanifest file automatically and link package.json name/description with it and with the base
+    template
+-   generate a RSS/ATOM feed
+-   (long-term) go "zero dependencies"
