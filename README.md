@@ -1,3 +1,10 @@
+### Deprecated
+
+> The repository has been archived as I'm:
+> - not going to be using the dnadesigned.dev domain for the time being (will work on another brand);
+> - the static site generation project is being rewritten from JS to Java (Quarkus+Native Image).
+
+
 # dnadesigned.dev project
 
 Project's goals:
